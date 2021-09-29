@@ -2,7 +2,7 @@
   "name": "Pure-shopping-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/Min-Hsuan/Pure-shopping-website",
+  "homepage": "https://Min-Hsuan.github.io/Pure-shopping-website",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
