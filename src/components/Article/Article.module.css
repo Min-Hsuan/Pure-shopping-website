@@ -1,0 +1,77 @@
+.article{
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 5rem;
+  min-height: 80vh;
+}
+
+.grid-col-12{
+  display: grid;
+  grid-template-columns: repeat(12,minmax(0,1fr));
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+
+}
+
+.title{
+  grid-column-start: 1;
+  grid-column-end: span 7;
+  color: #fff;
+  font-size: 7rem;
+  letter-spacing: 0.07em;
+  padding: 5rem 0 6rem 0;
+}
+
+.content{
+  grid-column-start: 6;
+  grid-column-end: span 7;
+  padding: 4rem;
+  background-color: #fff;
+  color: #000;
+}
+.content span{
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+
+  display: block;
+
+}
+
+.content p{
+  font-size: 1rem;
+  line-height: 2;
+  letter-spacing: 0.1em;
+}
+
+@media screen and (max-width: 1200px){
+  .article{
+    padding: 5rem 2rem;
+
+  }
+  .title{
+    grid-column-end: span 12;
+
+  }
+}
+
+@media screen and (max-width: 900px){
+  .article{
+    padding: 2rem 1rem;
+
+  }
+  .title{
+    font-size: 3rem;
+    padding: 5rem 2rem 3rem 2rem;
+    font-weight: 500;
+  }
+  .content{
+    grid-column-start: 1;
+    grid-column-end: span 12;
+    padding: 3rem;
+  }
+}

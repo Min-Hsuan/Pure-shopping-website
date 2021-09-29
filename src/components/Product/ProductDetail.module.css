@@ -1,0 +1,62 @@
+.detail{
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+}
+.content{
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.name{
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.button{
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  background-color: #000;
+  color: #fff;
+  padding: 1rem;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+.close{
+  position: absolute;
+  right: -32px;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.close svg{
+  height: 2.5em;
+  width: 2.5em;
+  
+}
+
+@media screen and ( max-width: 550px){
+  .detail{
+    grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+  .close{
+    right: 0;
+  }
+  .content{
+    padding: 2rem;
+  }
+  .content>div{
+    margin-bottom: 2rem;
+  }
+  .name{
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}

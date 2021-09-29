@@ -1,0 +1,33 @@
+.review-item{
+  display: flex;
+  width: 100%;
+  color: #656565;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid #CBCBCB;
+  line-height: 2;
+}
+
+.date{
+  font-size: 0.95rem;
+  color: #A8A8A8;
+  display: block;
+}
+.info{
+  flex: 1;
+  margin-right: 2.5rem;
+}
+.comment{
+  flex: 2;
+}
+.comment svg{
+  color: #A6B856;
+}
+
+@media screen and ( max-width: 700px){
+  .review-item{
+    padding: 1.5rem 0;
+
+  }
+}

@@ -1,0 +1,28 @@
+.sort {
+  padding: 5rem 1.5rem 0rem 1.5rem;
+  text-align: right;
+}
+
+.sort button {
+  border: 1px solid;
+  padding: 0.8rem 0.5rem;
+  font-size: 1rem;
+  margin-left: 0.8rem;
+  cursor: pointer;
+  background-color: transparent;
+  text-transform: capitalize;
+  letter-spacing: 0.05rem;
+}
+.sort button.active{
+  color: #848484;
+  background-color: rgba(132,132,132,19%);
+
+}
+
+
+
+@media screen and (max-width: 700px){
+  .sort {
+    padding: 5rem 0.5rem 0rem 0.5rem;
+  }
+}

@@ -1,0 +1,43 @@
+.product-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+.product-item span{
+  display: block;
+  letter-spacing: 0.05rem;
+}
+.product-name{
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 1rem 0;
+}
+.product-price{
+  font-size: 0.95rem;
+}
+.button{
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #fff;
+  border: 1px solid #000;
+  color: #000;
+  text-align: center;
+  letter-spacing: 0.1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+}
+.product-item:hover .button {
+  opacity: 1;
+  transition: 0.2s;
+}
+.product-item:hover .button:hover{
+  background-color: #000;
+  color: #fff;
+}
+.product-item:hover span{
+  opacity: 0;
+}

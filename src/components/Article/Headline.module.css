@@ -1,0 +1,35 @@
+.title{
+  font-size: 5.5rem;
+  line-height: 1.1;
+  margin: 1rem 0;
+}
+
+.headline p{
+  letter-spacing: 0.08rem;
+  margin-top: 2.5rem;
+  line-height: 2;
+  color: #656565;
+}
+.headline a{
+  color: #A6B856;
+  text-decoration: underline;
+  display: inline-block;
+  font-size: 1.15rem;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 900px){
+  .title{
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 500;
+  }
+  .headline p{
+     margin-top: 1rem;
+
+  }
+  .headline a{
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
