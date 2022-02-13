@@ -1,17 +1,16 @@
-import { useDispatch } from 'react-redux';
-
-import { cartActions } from '../../store/cart-slice';
-import classes from './CartItem.module.css';
+import { useDispatch } from 'react-redux'
+import { cartActions } from '../../store/cart-slice'
+import classes from './CartItem.module.css'
 
 const CartItem = (props) => {
-  const dispatch = useDispatch();
-  const { id, name, url, amount, price } = props;
+  const dispatch = useDispatch()
+  const { id, name, url, amount, price } = props
 
-  const transformedPrice = price.toFixed(2);
+  const transformedPrice = price.toFixed(2)
 
   const subtractHandler = () => {
-    dispatch(cartActions.removeItem(id));
-  };
+    dispatch(cartActions.removeItem(id))
+  }
 
   const addHandler = () => {
     const enteredItem = {
@@ -19,10 +18,10 @@ const CartItem = (props) => {
       name,
       amount,
       price,
-    };
-    dispatch(cartActions.addItem(enteredItem));
-  };
-  
+    }
+    dispatch(cartActions.addItem(enteredItem))
+  }
+
   return (
     <li className={classes['cart-item']}>
       <div className={classes.picture}>
@@ -36,7 +35,7 @@ const CartItem = (props) => {
       </div>
       <div className={classes.price}>{`${transformedPrice}$`}</div>
     </li>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default CartItem

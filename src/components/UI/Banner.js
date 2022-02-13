@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import classes from './Banner.module.css';
+import { Link } from 'react-router-dom'
+import classes from './Banner.module.css'
 
 const Banner = (props) => {
   return (
@@ -12,9 +12,14 @@ const Banner = (props) => {
             {props.linkText}
           </Link>
         )}
+        {props.actionText && (
+          <button onClick={() => props.onAction()} className={classes.link}>
+            {props.actionText}
+          </button>
+        )}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Banner;
+export default Banner

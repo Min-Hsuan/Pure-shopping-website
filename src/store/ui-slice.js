@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const uiSlice = createSlice({
   name: 'ui',
@@ -12,12 +12,15 @@ const uiSlice = createSlice({
         status: action.payload.status,
         title: action.payload.title,
         message: action.payload.message,
-      };
+      }
     },
     toggleCartDetail: (state) => {
-      state.cartIsOpened = !state.cartIsOpened;
+      state.cartIsOpened = !state.cartIsOpened
+    },
+    resetNotification: (state) => {
+      state.notification = { status: '', title: '', message: '' }
     },
   },
-});
-export const uiActions = uiSlice.actions;
-export default uiSlice;
+})
+export const uiActions = uiSlice.actions
+export default uiSlice

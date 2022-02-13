@@ -1,18 +1,20 @@
-import { Fragment } from 'react';
-import Banner from '../components/UI/Banner';
-import skinCareImage from '../assets/kalos-skincare.jpg';
-import bannerImage from '../assets/home-page-banner.jpg';
-import ProductSection from '../components/Product/ProductSection';
-import ArticleSection from '../components/Article/ArticleSection';
+import { Fragment } from 'react'
+import Banner from '../components/UI/Banner'
+import skinCareImage from '../assets/kalos-skincare.jpg'
+import bannerImage from '../assets/home-page-banner.jpg'
+import ProductSection from '../components/Product/ProductSection'
+import ArticleSection from '../components/Article/ArticleSection'
 
-import articleBanner1 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash-1.jpg';
-import articleBanner2 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash.jpg';
-import ReviewSection from '../components/Reviews/ReviewSection';
+import articleBanner1 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash-1.jpg'
+import articleBanner2 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash.jpg'
+import ReviewSection from '../components/Reviews/ReviewSection'
 
-import picture1 from '../assets/Mask Group-1.jpg';
-import picture2 from '../assets/Mask Group-2.jpg';
-import picture3 from '../assets/Mask Group-3.jpg';
-import picture4 from '../assets/Mask Group-4.jpg';
+import picture1 from '../assets/Mask Group-1.jpg'
+import picture2 from '../assets/Mask Group-2.jpg'
+import picture3 from '../assets/Mask Group-3.jpg'
+import picture4 from '../assets/Mask Group-4.jpg'
+import { useDispatch } from 'react-redux'
+import { cartActions } from '../store/cart-slice'
 const articleDatas = [
   {
     id: '1',
@@ -40,7 +42,7 @@ const articleDatas = [
     },
     link: 'article-02',
   },
-];
+]
 
 const reviewDatas = [
   {
@@ -64,7 +66,7 @@ const reviewDatas = [
     comment:
       'Great texture, natural coverage. Only one minus is the drop which doesn’t dispose enough serum.',
   },
-];
+]
 const productDatas = [
   {
     id: '1',
@@ -90,9 +92,20 @@ const productDatas = [
     name: 'Aenean sit amet tortor molestie',
     price: 15.5,
   },
-];
+]
 const HomePage = (props) => {
-
+  const dispatch = useDispatch()
+  const addFreeHandler = () => {
+    dispatch(
+      cartActions.addItem({
+        id: '9',
+        url: picture3,
+        name: 'Free Aenean sit amet tortor molestie 3ml',
+        price: 0,
+        amount: 1,
+      })
+    )
+  }
   return (
     <Fragment>
       <Banner src={bannerImage} alt="The product picture." />
@@ -102,7 +115,7 @@ const HomePage = (props) => {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel pellentesque turpis, lacinia pretium mauris. Cras lacinia erat sed leo tristique condimentum nec id metus.',
           title: 'Go back to pure',
         }}
-        productItems ={productDatas}
+        productItems={productDatas}
         status={props.status}
         title={props.title}
         message={props.message}
@@ -112,13 +125,14 @@ const HomePage = (props) => {
         src={skinCareImage}
         alt="Girl smile with the product."
         title="Understand your skin and its complex needs."
-        linkText="GET IT FOR FREE"
+        onAction={addFreeHandler}
+        actionText="GET IT FOR FREE"
       />
       <ArticleSection articles={articleDatas} />
       <hr className="hr-middle" />
       <ReviewSection reviews={reviewDatas} title="Reviews" />
     </Fragment>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

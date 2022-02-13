@@ -9,8 +9,11 @@
   color: white;
   animation: slide-in 200ms ease-out forwards;
   transition: 0.2s linear;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }
-
 
 .notification p {
   font-size: 1rem;
@@ -29,4 +32,3 @@
     transform: translateY(0);
   }
 }
-

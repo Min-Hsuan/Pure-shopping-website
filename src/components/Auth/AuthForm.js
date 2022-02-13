@@ -1,32 +1,32 @@
-import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, Link } from 'react-router-dom'
+import { uiActions } from '../../store/ui-slice'
+import { fetchAuthData } from '../../store/auth-https'
+import LoadingSpinner from '../UI/LoadingSpinner'
+import classes from './AuthForm.module.css'
 
-import { fetchAuthData } from '../../store/auth-https';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import classes from './AuthForm.module.css';
-
-const AuthForm = (props) => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const [isLogin, setIsLogin] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(props.message);
+const AuthForm = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const [isLogin, setIsLogin] = useState(true)
+  const notifyStatus = useSelector((state) => state.ui.notification.status)
+  const notifyMessage = useSelector((state) => state.ui.notification.message)
 
   const submitHandler = (event) => {
-    event.preventDefault();
-    const enteredEmail = emailRef.current.value;
-    const enteredPassword = passwordRef.current.value;
-    let url;
+    event.preventDefault()
+    const enteredEmail = emailRef.current.value
+    const enteredPassword = passwordRef.current.value
+    let url
     if (isLogin) {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g';
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g'
     } else {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g';
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g'
     }
-
     dispatch(
       fetchAuthData(
         {
@@ -36,40 +36,55 @@ const AuthForm = (props) => {
         },
         url
       )
-    );
-
-    //if error occurred ,then show error
-    if (props.status !== 'success') {
-      setErrorMessage(props.message);
-      return;
-    } else {
-      history.push('/');
+    )
+    if (notifyStatus === 'success') {
+      history.push('/')
     }
-  };
+  }
 
   const switchAuthModeHandler = () => {
-    setIsLogin((prev) => !prev);
-  };
-  
-  let submitText = 'Create Account';
-  if (isLogin) {
-    submitText = 'LOGIN';
+    setIsLogin((prev) => !prev)
+    emailRef.current.value = ''
+    passwordRef.current.value = ''
+    dispatch(
+      uiActions.showNotification({
+        status: '',
+        title: '',
+        message: '',
+      })
+    )
   }
-  if (props.status === 'pending') {
-    submitText = <LoadingSpinner />;
+  let submitText = 'Create Account'
+  if (isLogin) {
+    submitText = 'LOGIN'
+  }
+  if (notifyStatus === 'pending') {
+    submitText = <LoadingSpinner />
   }
 
   const emailChangeHandler = () => {
-    setErrorMessage(null);
-  };
+    dispatch(
+      uiActions.showNotification({
+        status: '',
+        title: '',
+        message: '',
+      })
+    )
+  }
   const passwordChangeHandler = () => {
-    setErrorMessage(null);
-  };
+    dispatch(
+      uiActions.showNotification({
+        status: '',
+        title: '',
+        message: '',
+      })
+    )
+  }
   return (
     <div className={classes['auth-bgc']}>
-      <section className={classes.auth} onSubmit={submitHandler}>
+      <section className={classes.auth}>
         <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-        <form>
+        <form onSubmit={submitHandler}>
           <div className={classes.control}>
             <label htmlFor="email">Email</label>
             <input
@@ -90,13 +105,13 @@ const AuthForm = (props) => {
               onChange={passwordChangeHandler}
             />
           </div>
-          {props.status === 'error' && (
-            <span className={classes.warning}>{errorMessage}</span>
+          {notifyStatus === 'error' && (
+            <span className={classes.warning}>{notifyMessage}</span>
           )}
           <button className={classes.toggle}>{submitText}</button>
         </form>
         <div className={classes.action}>
-          <a href="/">Forgot your password ? </a>
+          <Link to="/reset-password">Forgot your password ? </Link>
           <button className={classes.creat} onClick={switchAuthModeHandler}>
             {' '}
             {isLogin ? 'Create an account' : 'Login with existing account'}{' '}
@@ -104,7 +119,7 @@ const AuthForm = (props) => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm

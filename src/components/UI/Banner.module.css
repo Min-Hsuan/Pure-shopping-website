@@ -30,14 +30,16 @@
   padding: 0.8rem 1.6rem;
   margin-top: 2.5rem;
   display: inline-block;
+  border: none;
+  cursor: pointer;
 }
-@media screen and (max-width: 900px){
-  .banner{
+@media screen and (max-width: 900px) {
+  .banner {
     max-height: 30rem;
     height: 100%;
     overflow: hidden;
   }
-  .banner img{
+  .banner img {
     height: 100%;
     object-fit: cover;
     transform: translateX(-45%);
@@ -50,11 +52,11 @@
   }
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
   .title {
     font-size: 2rem;
   }
-  .link{
+  .link {
     margin-top: 1.5rem;
   }
 }

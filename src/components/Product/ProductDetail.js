@@ -1,21 +1,21 @@
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux'
 
-import { RiCloseFill } from 'react-icons/ri';
-import { cartActions } from '../../store/cart-slice';
-import { uiActions } from '../../store/ui-slice';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import Modal from '../UI/Modal';
-import classes from './ProductDetail.module.css';
+import { RiCloseFill } from 'react-icons/ri'
+import { cartActions } from '../../store/cart-slice'
+import { uiActions } from '../../store/ui-slice'
+import LoadingSpinner from '../UI/LoadingSpinner'
+import Modal from '../UI/Modal'
+import classes from './ProductDetail.module.css'
 
 const ProductDetail = (props) => {
-  const dispatch = useDispatch();
-  const { id, name, url, price } = props.clickItem;
-  const {status,onClose} = props;
-  const transformedPrice = price.toFixed(2);
+  const dispatch = useDispatch()
+  const { id, name, url, price } = props.clickItem
+  const { status, onClose } = props
+  const transformedPrice = price.toFixed(2)
 
-  let buttonText = `ADD TO CART — ${price}$`;
+  let buttonText = `ADD TO CART — ${price}$`
   if (status === 'pending') {
-    buttonText = <LoadingSpinner />;
+    buttonText = <LoadingSpinner />
   }
   const addToCartHandler = () => {
     dispatch(
@@ -26,15 +26,15 @@ const ProductDetail = (props) => {
         amount: 1,
         url,
       })
-    );
-    if(status === 'success'){
-      dispatch(uiActions.toggleCartDetail());
+    )
+    if (status === 'success') {
+      dispatch(uiActions.toggleCartDetail())
     }
-  };
-  
+  }
+
   const closeModalHandler = () => {
-    onClose();
-  };
+    onClose()
+  }
 
   return (
     <Modal className="fixed-center" onClose={onClose}>
@@ -54,7 +54,7 @@ const ProductDetail = (props) => {
         <RiCloseFill />
       </button>
     </Modal>
-  );
-};
+  )
+}
 
-export default ProductDetail;
+export default ProductDetail
