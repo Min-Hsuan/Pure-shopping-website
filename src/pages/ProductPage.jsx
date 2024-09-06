@@ -1,11 +1,11 @@
-import ProductList from '../components/Product/ProductList';
+import ProductList from '../components/Product/ProductList.jsx';
 import picture1 from '../assets/Mask Group-1.jpg';
 import picture2 from '../assets/Mask Group-2.jpg';
 import picture3 from '../assets/Mask Group-3.jpg';
 import picture4 from '../assets/Mask Group-4.jpg';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import ProductSort from '../components/Product/ProductSort';
+import ProductSort from '../components/Product/ProductSort.jsx';
 const productDatas = [
   {
     id: '1',

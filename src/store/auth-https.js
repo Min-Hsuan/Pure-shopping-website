@@ -1,5 +1,5 @@
-import { authActions } from './auth-slice'
-import { uiActions } from './ui-slice'
+import { authActions } from './auth-slice.js'
+import { uiActions } from './ui-slice.js'
 
 export const fetchAuthData = (authData, url) => {
   return async (dispatch) => {

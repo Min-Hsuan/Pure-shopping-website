@@ -1,20 +1,20 @@
 import React, { useEffect, Suspense } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-import Layout from './components/Layout/Layout'
-import LoadingSpinner from './components/UI/LoadingSpinner'
+import Layout from './components/Layout/Layout.jsx'
+import LoadingSpinner from './components/UI/LoadingSpinner.jsx'
 
-import { fetchCartData, sendCartData } from './store/cart-https'
-import { retrieveStoredToken } from './store/auth-https'
-import { cartActions } from './store/cart-slice'
-import { uiActions } from './store/ui-slice'
+import { fetchCartData, sendCartData } from './store/cart-https.js'
+import { retrieveStoredToken } from './store/auth-https.js'
+import { cartActions } from './store/cart-slice.js'
+import { uiActions } from './store/ui-slice.js'
 
-const AuthPage = React.lazy(() => import('./pages/AuthPage'))
-const ResetPage = React.lazy(() => import('./pages/ResetPage'))
-const Blog = React.lazy(() => import('./pages/Blog'))
-const HomePage = React.lazy(() => import('./pages/HomePage'))
-const ProductPage = React.lazy(() => import('./pages/ProductPage'))
+const AuthPage = React.lazy(() => import('./pages/AuthPage.jsx'))
+const ResetPage = React.lazy(() => import('./pages/ResetPage.jsx'))
+const Blog = React.lazy(() => import('./pages/Blog.jsx'))
+const HomePage = React.lazy(() => import('./pages/HomePage.jsx'))
+const ProductPage = React.lazy(() => import('./pages/ProductPage.jsx'))
 
 let initial = true
 
@@ -76,36 +76,26 @@ function App() {
   return (
     <Layout>
       <Suspense fallback={<LoadingSpinner />}>
-        <Switch>
+        <Routes>
           {!isLoggedIn && (
-            <Route path="/login" exact>
-              <AuthPage />
-            </Route>
+            <Route path="/login" element={<AuthPage />}/>
           )}
-          <Route path="/reset-password" exact>
-            <ResetPage />
-          </Route>
-          <Route path="/" exact>
-            <HomePage
+          <Route path="/reset-password" element={<ResetPage />}/>
+          <Route path="/" element={<HomePage
               status={notification.status}
               title={notification.title}
               message={notification.message}
-            />
+            />}>
+
           </Route>
-          <Route path="/products" exact>
-            <ProductPage
+          <Route path="/products" element={<ProductPage
               status={notification.status}
               title={notification.title}
               message={notification.message}
-            />
-          </Route>
-          <Route path="/article/:articleId" exact>
-            <Blog />
-          </Route>
-          <Route path="*">
-            <Redirect to="/" />
-          </Route>
-        </Switch>
+            />}/>
+          <Route path="/article/:articleId" element={<Blog />}/>
+          <Route path="*" element={<Navigate to="/" replace />}/>
+        </Routes>
       </Suspense>
     </Layout>
   )

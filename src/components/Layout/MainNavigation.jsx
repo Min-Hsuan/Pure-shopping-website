@@ -1,16 +1,16 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ReactComponent as Logo } from '../../assets/logo.svg'
-import { authActions } from '../../store/auth-slice'
-import { cartActions } from '../../store/cart-slice'
-import { uiActions } from '../../store/ui-slice'
-import Notification from '../UI/Notification'
+import  Logo  from '../../assets/logo.svg'
+import { authActions } from '../../store/auth-slice.js'
+import { cartActions } from '../../store/cart-slice.js'
+import { uiActions } from '../../store/ui-slice.js'
+import Notification from '../UI/Notification.jsx'
 import classes from './MainNavigation.module.css'
 
 const MainNavigation = (props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.idToken)
   const cartQuantity = useSelector((state) => state.cart.totalQuantity)
@@ -33,7 +33,7 @@ const MainNavigation = (props) => {
     setTimeout(() => {
       dispatch(uiActions.resetNotification())
     }, 2000)
-    history.push('/')
+    navigate('/')
   }
 
   const cartOpenHandler = () => {
@@ -46,7 +46,7 @@ const MainNavigation = (props) => {
       <header className={classes.header}>
         <Link to="/">
           <div className={classes.logo}>
-            <Logo />
+            <img src={Logo} alt=""/>
           </div>
         </Link>
         <nav>

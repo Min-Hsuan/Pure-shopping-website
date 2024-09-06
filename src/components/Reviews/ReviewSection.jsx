@@ -1,6 +1,6 @@
-import HeadLine from '../Article/Headline';
-import Container from '../UI/Container';
-import ReviewItem from './ReviewItem';
+import HeadLine from '../Article/Headline.jsx';
+import Container from '../UI/Container.jsx';
+import ReviewItem from './ReviewItem.jsx';
 
 const ReviewSection = (props) => {
   const content = (

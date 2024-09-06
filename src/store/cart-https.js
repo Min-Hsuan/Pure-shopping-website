@@ -1,5 +1,5 @@
-import { cartActions } from './cart-slice'
-import { uiActions } from './ui-slice'
+import { cartActions } from './cart-slice.js'
+import { uiActions } from './ui-slice.js'
 
 const FIREBASE_DOMIN = 'https://react-http-fc644-default-rtdb.firebaseio.com'
 

@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, Link } from 'react-router-dom'
-import { uiActions } from '../../store/ui-slice'
-import { fetchAuthData } from '../../store/auth-https'
-import LoadingSpinner from '../UI/LoadingSpinner'
+import { useNavigate, Link } from 'react-router-dom'
+import { uiActions } from '../../store/ui-slice.js'
+import { fetchAuthData } from '../../store/auth-https.js'
+import LoadingSpinner from '../UI/LoadingSpinner.jsx'
 import classes from './AuthForm.module.css'
 
 const AuthForm = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -38,7 +38,7 @@ const AuthForm = () => {
       )
     )
     if (notifyStatus === 'success') {
-      history.push('/')
+      navigate('/')
     }
   }
 

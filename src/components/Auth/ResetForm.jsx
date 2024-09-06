@@ -2,8 +2,8 @@ import classes from './ResetForm.module.css'
 import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchResetAuth } from '../../store/auth-https'
-import LoadingSpinner from '../UI/LoadingSpinner'
+import { fetchResetAuth } from '../../store/auth-https.js'
+import LoadingSpinner from '../UI/LoadingSpinner.jsx'
 const ResetForm = () => {
   const emailRef = useRef()
   const dispatch = useDispatch()

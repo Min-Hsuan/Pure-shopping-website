@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux'
 
 import { RiCloseFill } from 'react-icons/ri'
-import { cartActions } from '../../store/cart-slice'
-import { uiActions } from '../../store/ui-slice'
-import LoadingSpinner from '../UI/LoadingSpinner'
-import Modal from '../UI/Modal'
+import { cartActions } from '../../store/cart-slice.js'
+import { uiActions } from '../../store/ui-slice.js'
+import LoadingSpinner from '../UI/LoadingSpinner.jsx'
+import Modal from '../UI/Modal.jsx'
 import classes from './ProductDetail.module.css'
 
 const ProductDetail = (props) => {

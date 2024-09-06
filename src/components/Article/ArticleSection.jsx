@@ -1,6 +1,6 @@
-import Container from '../UI/Container';
+import Container from '../UI/Container.jsx';
 import classes from './ArticleSection.module.css';
-import HeadLine from './Headline';
+import HeadLine from './Headline.jsx';
 
 const ArticleSection = (props) => {
   const content = <ul >{props.articles.map((article) => (

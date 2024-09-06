@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import Article from '../components/Article/Article';
+import Article from '../components/Article/Article.jsx';
 import articleBanner1 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash-1.jpg';
 import articleBanner2 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash.jpg';
 const articleDatas = [

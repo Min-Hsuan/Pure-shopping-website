@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RiCloseFill } from 'react-icons/ri';
-import { uiActions } from './../../store/ui-slice';
-import Modal from '../UI/Modal';
-import CartItem from './CartItem';
+import { uiActions } from './../../store/ui-slice.js';
+import Modal from '../UI/Modal.jsx';
+import CartItem from './CartItem.jsx';
 
 import classes from './Cart.module.css';
 

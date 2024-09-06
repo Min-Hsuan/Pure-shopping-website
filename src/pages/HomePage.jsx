@@ -1,20 +1,20 @@
 import { Fragment } from 'react'
-import Banner from '../components/UI/Banner'
+import Banner from '../components/UI/Banner.jsx'
 import skinCareImage from '../assets/kalos-skincare.jpg'
 import bannerImage from '../assets/home-page-banner.jpg'
-import ProductSection from '../components/Product/ProductSection'
-import ArticleSection from '../components/Article/ArticleSection'
+import ProductSection from '../components/Product/ProductSection.jsx'
+import ArticleSection from '../components/Article/ArticleSection.jsx'
 
 import articleBanner1 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash-1.jpg'
 import articleBanner2 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash.jpg'
-import ReviewSection from '../components/Reviews/ReviewSection'
+import ReviewSection from '../components/Reviews/ReviewSection.jsx'
 
 import picture1 from '../assets/Mask Group-1.jpg'
 import picture2 from '../assets/Mask Group-2.jpg'
 import picture3 from '../assets/Mask Group-3.jpg'
 import picture4 from '../assets/Mask Group-4.jpg'
 import { useDispatch } from 'react-redux'
-import { cartActions } from '../store/cart-slice'
+import { cartActions } from '../store/cart-slice.js'
 const articleDatas = [
   {
     id: '1',

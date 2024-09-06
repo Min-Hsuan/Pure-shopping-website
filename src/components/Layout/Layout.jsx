@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
-import Cart from '../Cart/Cart';
-import Footer from './Footer';
-import MainNavigation from './MainNavigation';
+import Cart from '../Cart/Cart.jsx';
+import Footer from './Footer.jsx';
+import MainNavigation from './MainNavigation.jsx';
 
 const Layout = (props) => {
   const cartIsOpened = useSelector((state) => state.ui.cartIsOpened);

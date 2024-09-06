@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import ProductItem from './ProductItem';
-import ProductDetail from './ProductDetail';
+import ProductItem from './ProductItem.jsx';
+import ProductDetail from './ProductDetail.jsx';
 import './ProductList.css';
 
 const ProductList = (props) => {

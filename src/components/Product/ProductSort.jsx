@@ -1,7 +1,7 @@
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import classes from './ProductSort.module.css';
 const ProductSort = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const sortAscHandler = () => {
@@ -11,7 +11,7 @@ const ProductSort = (props) => {
     });
   };
   const sortDesHandler = () => {
-    history.push({
+    navigate({
       pathname: location.pathname,
       search: '?sort=des',
     });
