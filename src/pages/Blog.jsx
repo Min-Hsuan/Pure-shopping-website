@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 
 import Article from '../components/Article/Article.jsx';
-import articleBanner1 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash-1.jpg';
-import articleBanner2 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash.jpg';
+import articleBanner1 from '../assets/kalos-skincare-unsplash-1.jpg';
+import articleBanner2 from '../assets/kalos-skincare-unsplash.jpg';
 const articleDatas = [
   {
     id: '1',
