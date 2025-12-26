@@ -26,7 +26,7 @@ const HomePage = (props) => {
       setIsLoading(true)
       try{
         const [productRes, articleRes, reviewRes] = await Promise.all([
-          fetch(`${FIREBASE_DOMIN}/products.json`),
+          fetch(`${FIREBASE_DOMIN}/products_index.json`),
           fetch(`${FIREBASE_DOMIN}/articles.json`),
           fetch(`${FIREBASE_DOMIN}/reviews.json`)
         ])

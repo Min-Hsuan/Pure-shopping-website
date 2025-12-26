@@ -64,11 +64,7 @@ function App() {
       dispatch(fetchCartData(idToken))
       setTimeout(() => {
         dispatch(
-          uiActions.showNotification({
-            status: '',
-            title: '',
-            message: '',
-          })
+          uiActions.resetNotification()
         )
       }, 2000)
     }

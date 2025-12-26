@@ -21,7 +21,12 @@
   letter-spacing: 0.1rem;
   text-transform: uppercase;
 }
-
+.success{
+  background-color: rgb(62, 130, 62);
+}
+.error{
+  background-color: rgb(198, 46, 46);
+}
 @keyframes slide-in {
   from {
     opacity: 0.85;

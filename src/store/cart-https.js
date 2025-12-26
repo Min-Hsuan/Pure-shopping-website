@@ -1,5 +1,7 @@
 import { cartActions } from './cart-slice.js'
 import { uiActions } from './ui-slice.js'
+import { onValue, ref, set } from 'firebase/database'
+import {db , auth} from '../firebase.js'
 
 const FIREBASE_DOMIN = import.meta.env.VITE_FIREBASE_DATABASE_URL
 
@@ -15,22 +17,15 @@ export const sendCartData = (cart) => {
         message: 'Sending cart data',
       })
     )
-    const storedUserId = localStorage.getItem('userIdToken')
-    try {
-      const response = await fetch(
-        `${FIREBASE_DOMIN}/pureCart/${storedUserId}.json`,
-        {
-          method: 'PUT',
-          body: JSON.stringify({
-            items: cart.items,
-            totalAmount: cart.totalAmount,
-            totalQuantity: cart.totalQuantity,
-          }),
-        }
-      )
-      if (!response.ok) {
-        throw new Error('Send data failed!')
-      }
+    const uid = auth.currentUser?.uid
+    if(!uid) return
+    try{
+      console.log('uid',auth.currentUser)
+      await set(ref(db, `carts/${uid}`),{
+        items: cart.items,
+        totalAmount: cart.totalAmount,
+        totalQuantity: cart.totalQuantity,
+      })
       dispatch(
         uiActions.showNotification({
           status: 'success',
@@ -38,7 +33,7 @@ export const sendCartData = (cart) => {
           message: 'Modify cart itmes successfully',
         })
       )
-    } catch (error) {
+    }catch (error) {
       dispatch(
         uiActions.showNotification({
           status: 'error',
@@ -59,29 +54,27 @@ export const fetchCartData = (userIdToken) => {
         message: 'Getting cart data.',
       })
     )
-    try {
-      const response = await fetch(
-        `${FIREBASE_DOMIN}/pureCart/${userIdToken}.json`
-      )
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error('Fetch data failed')
-      }
+    const uid = auth.currentUser?.uid
+    if(!uid) return
+    const cartRef = ref(db,`carts/${uid}`)
+    onValue(cartRef, (snapshot)=>{
+      const data = snapshot.val() || {}
       dispatch(
         cartActions.replaceCart({
           items: data.items || [],
-          totalAmount: data.totalAmount,
-          totalQuantity: data.totalQuantity,
+          totalAmount: data.totalAmount || 0,
+          totalQuantity: data.totalQuantity || 0,
         })
       )
       dispatch(
-        uiActions.showNotification({
-          status: 'success',
-          title: 'Success',
-          message: 'Getting cart data successfully.',
-        })
-      )
-    } catch (error) {
+      uiActions.showNotification({
+        status: 'success',
+        title: 'Getting data successfully',
+        message: 'Getting cart data successfully.',
+      })
+    )
+    },(error)=>{
+      console.log(error)
       dispatch(
         uiActions.showNotification({
           status: 'error',
@@ -89,6 +82,7 @@ export const fetchCartData = (userIdToken) => {
           message: 'Getting data failed.',
         })
       )
-    }
+    })
+    
   }
 }

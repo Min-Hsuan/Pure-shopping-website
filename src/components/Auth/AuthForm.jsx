@@ -12,7 +12,6 @@ const AuthForm = (props) => {
   const dispatch = useDispatch()
   const emailRef = useRef()
   const passwordRef = useRef()
-  const [errorMsg, setErrorMsg] = useState(null)
   const [mode, setMode] = useState(props.mode) // switch between singup & login
   const notifyStatus = useSelector((state) => state.ui.notification.status)
   const notifyMessage = useSelector((state) => state.ui.notification.message)
@@ -31,7 +30,7 @@ const AuthForm = (props) => {
     setMode((prev) => prev === 'login'? 'signup' : 'login')
     emailRef.current.value = ''
     passwordRef.current.value = ''
-    setErrorMsg(null)
+    dispatch(uiActions.resetNotification())
     navigate(mode === 'login'? '/signup' : '/login')
     dispatch(
       uiActions.resetNotification()

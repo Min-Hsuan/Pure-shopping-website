@@ -35,6 +35,7 @@ export const fetchAuthData = (email, password, mode) => {
         userCrediential = await signInWithEmailAndPassword( auth, email, password)
           dispatch(uiActions.showNotification({
             status: 'success',
+            title: 'Success!',
             message: 'Sign in successfully'
           }))
       }else{

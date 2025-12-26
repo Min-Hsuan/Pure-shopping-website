@@ -15,6 +15,7 @@ const MainNavigation = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.idToken)
   const cartQuantity = useSelector((state) => state.cart.totalQuantity)
   const successMessage = useSelector((state) => state.ui.notification.message)
+  const notifyStatus = useSelector((state) => state.ui.notification.status)
 
   const logoutHandler = () => {
     dispatch(authActions.logout())
@@ -42,7 +43,7 @@ const MainNavigation = (props) => {
 
   return (
     <React.Fragment>
-      {successMessage !== '' && <Notification message={successMessage} />}
+      {successMessage !== '' && <Notification message={successMessage} className={notifyStatus} />}
       <header className={classes.header}>
         <Link to="/">
           <div className={classes.logo}>

@@ -5,7 +5,7 @@ const ProductSort = (props) => {
   const location = useLocation();
 
   const sortAscHandler = () => {
-    history.push({
+    navigate({
       pathname: location.pathname,
       search: '?sort=asc',
     });
