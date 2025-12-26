@@ -1,100 +1,58 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect,useState } from 'react'
 import Banner from '../components/UI/Banner.jsx'
 import skinCareImage from '../assets/kalos-skincare.jpg'
 import bannerImage from '../assets/home-page-banner.jpg'
 import ProductSection from '../components/Product/ProductSection.jsx'
 import ArticleSection from '../components/Article/ArticleSection.jsx'
 
-import articleBanner1 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash-1.jpg'
-import articleBanner2 from '../assets/kalos-skincare-lwOmVsTuLdg-unsplash.jpg'
+
 import ReviewSection from '../components/Reviews/ReviewSection.jsx'
 
-import picture1 from '../assets/Mask Group-1.jpg'
-import picture2 from '../assets/Mask Group-2.jpg'
-import picture3 from '../assets/Mask Group-3.jpg'
-import picture4 from '../assets/Mask Group-4.jpg'
+
 import { useDispatch } from 'react-redux'
 import { cartActions } from '../store/cart-slice.js'
-const articleDatas = [
-  {
-    id: '1',
-    img: {
-      url: articleBanner1,
-      alt: 'nature ingredients.',
-    },
-    text: {
-      title: "It's simple, really.",
-      paragraph:
-        'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse sollicitudin ipsum cursus accumsan sollicitudin. Sed nec auctor ipsum. Phasellus interdum imperdiet.',
-    },
-    link: 'article-01',
-  },
-  {
-    id: '2',
-    img: {
-      url: articleBanner2,
-      alt: 'skin care procedure.',
-    },
-    text: {
-      title: 'Better way to feel better',
-      paragraph:
-        'Fusce vel lectus id eros varius cursus sed id purus. Proin sodales, dui eu pharetra eleifend, elit dui molestie velit, in suscipit elit velit in arcu. Morbi vitae tellus eget.',
-    },
-    link: 'article-02',
-  },
-]
+import { uiActions } from '../store/ui-slice.js'
+const FIREBASE_DOMIN = import.meta.env.VITE_FIREBASE_DATABASE_URL
 
-const reviewDatas = [
-  {
-    id: '1',
-    user: 'özlem A.',
-    date: 'August 3, 2021',
-    comment:
-      'Proin tempor consequat massa a imperdiet. Nullam mattis sollicitudin orci, non sodales lacus suscipit non.',
-  },
-  {
-    id: '2',
-    user: 'özlem B.',
-    date: 'August 3, 2021',
-    comment:
-      'I think the product is really good although the smell could be a little off putting. But the nozzle is really bad.',
-  },
-  {
-    id: '3',
-    user: 'özlem C.',
-    date: 'August 3, 2021',
-    comment:
-      'Great texture, natural coverage. Only one minus is the drop which doesn’t dispose enough serum.',
-  },
-]
-const productDatas = [
-  {
-    id: '1',
-    url: picture1,
-    name: 'Nam placerat nulla ut',
-    price: 15.5,
-  },
-  {
-    id: '2',
-    url: picture2,
-    name: 'Morbi suscipit nunc consequat odio',
-    price: 20.0,
-  },
-  {
-    id: '3',
-    url: picture3,
-    name: 'Nunc quis tortor et sem volutpat',
-    price: 10.5,
-  },
-  {
-    id: '4',
-    url: picture4,
-    name: 'Aenean sit amet tortor molestie',
-    price: 15.5,
-  },
-]
 const HomePage = (props) => {
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
+  const [products, setProducts] = useState([])
+  const [articles, setArticles] = useState([])
+  const [reviews, setReviews] = useState([])
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      setIsLoading(true)
+      try{
+        const [productRes, articleRes, reviewRes] = await Promise.all([
+          fetch(`${FIREBASE_DOMIN}/products.json`),
+          fetch(`${FIREBASE_DOMIN}/articles.json`),
+          fetch(`${FIREBASE_DOMIN}/reviews.json`)
+        ])
+        if(!productRes.ok || !articleRes.ok || !reviewRes.ok){
+          throw new Error('Failed to load data for homepage')
+        }
+        const [productData, articleData, reviewData] = await Promise.all([
+          productRes.json(),
+          articleRes.json(),
+          reviewRes.json()
+        ])
+        setProducts(Object.values(productData))
+        setArticles(Object.values(articleData))
+        setReviews(Object.values(reviewData))
+      }catch(error){
+        dispatch(uiActions.showNotification({
+          status: 'error',
+          title: 'Loading Failed',
+          message: 'Failed to load data for products'
+        }))
+      }finally{
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  },[dispatch])
   const addFreeHandler = () => {
     dispatch(
       cartActions.addItem({
@@ -115,7 +73,7 @@ const HomePage = (props) => {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel pellentesque turpis, lacinia pretium mauris. Cras lacinia erat sed leo tristique condimentum nec id metus.',
           title: 'Go back to pure',
         }}
-        productItems={productDatas}
+        productItems={products}
         status={props.status}
         title={props.title}
         message={props.message}
@@ -128,9 +86,9 @@ const HomePage = (props) => {
         onAction={addFreeHandler}
         actionText="GET IT FOR FREE"
       />
-      <ArticleSection articles={articleDatas} />
+      <ArticleSection articles={articles} />
       <hr className="hr-middle" />
-      <ReviewSection reviews={reviewDatas} title="Reviews" />
+      <ReviewSection reviews={reviews} title="Reviews" />
     </Fragment>
   )
 }

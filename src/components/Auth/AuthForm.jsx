@@ -5,6 +5,7 @@ import { uiActions } from '../../store/ui-slice.js'
 import { fetchAuthData } from '../../store/auth-https.js'
 import LoadingSpinner from '../UI/LoadingSpinner.jsx'
 import classes from './AuthForm.module.css'
+import GoogleLoginBtn from './GoogleLoginBtn.jsx'
 
 const AuthForm = () => {
   const navigate = useNavigate()
@@ -116,6 +117,8 @@ const AuthForm = () => {
             {' '}
             {isLogin ? 'Create an account' : 'Login with existing account'}{' '}
           </button>
+          <span>or</span>
+         <GoogleLoginBtn />
         </div>
       </section>
     </div>
