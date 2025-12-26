@@ -1,8 +1,11 @@
 import { cartActions } from './cart-slice.js'
 import { uiActions } from './ui-slice.js'
 
-const FIREBASE_DOMIN = 'https://react-http-fc644-default-rtdb.firebaseio.com'
+const FIREBASE_DOMIN = import.meta.env.VITE_FIREBASE_DATABASE_URL
 
+if(!FIREBASE_DOMIN){
+  console.error('Firebase Database URL 未設定')
+}
 export const sendCartData = (cart) => {
   return async (dispatch) => {
     dispatch(
