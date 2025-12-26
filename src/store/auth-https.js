@@ -1,7 +1,9 @@
 import { authActions } from './auth-slice.js'
 import { uiActions } from './ui-slice.js'
-import { signInWithEmailAndPassword ,createUserWithEmailAndPassword} from 'firebase/auth'
+import { signInWithEmailAndPassword ,createUserWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'
 import { auth } from '../firebase.js'
+import { cartActions } from './cart-slice.js';
+
 const AUTH_ERRORS = {
      // Registration Errors
     'auth/email-already-in-use': 'This email is already registered. Please log in instead.',
@@ -41,12 +43,7 @@ export const fetchAuthData = (email, password, mode) => {
       }else{
         userCrediential = await createUserWithEmailAndPassword(auth, email, password)
       }
-      dispatch(authActions.login(userCrediential.user.uid))
-      localStorage.setItem('userIdToken', userCrediential.user.uid)
-      const expirationTime = new Date(
-        new Date().getTime() + data.expiresIn * 1000
-      )
-      localStorage.setItem('userExpiration', expirationTime)
+      dispatch(authActions.login())
       dispatch(
         uiActions.showNotification({
           status: 'success',
@@ -111,26 +108,42 @@ export const fetchResetAuth = (emailData, url) => {
   }
 }
 
-const calculateRemainingTime = (expirationTime) => {
-  const currentTime = new Date().getTime()
-  const adjExpirationTime = new Date(expirationTime).getTime()
-  const remainingDuration = adjExpirationTime - currentTime
-  return remainingDuration
-}
-
 export const retrieveStoredToken = () => {
   return (dispatch) => {
-    const storedToken = localStorage.getItem('userIdToken')
-    const storedExpires = localStorage.getItem('userExpiration')
-    const remainingTime = calculateRemainingTime(storedExpires)
-    if (remainingTime <= 3600 && storedToken) {
+    const unsubscribe = onAuthStateChanged(auth, (user)=>{
+      if(user){
+        dispatch(authActions.login())
+      }
+    })
+    return unsubscribe
+  }
+}
+export const logout = ()=>{
+  return async(dispatch)=> {
+    try{
+      await signOut(auth)
       dispatch(authActions.logout())
-      localStorage.removeItem('userIdToken')
-      localStorage.removeItem('userExpiration')
-      return null
-    }
-    if (storedToken) {
-      dispatch(authActions.login(storedToken))
+      dispatch(cartActions.clearCart())
+      localStorage.removeItem('cart')
+      setTimeout(() => {
+        dispatch(
+          uiActions.showNotification({
+          status: 'success',
+          title: 'Logout successfully!',
+          message: 'Logout successfully. See you soon.',
+          })
+        )
+      }, 300)
+      setTimeout(() => {
+        dispatch(uiActions.resetNotification())
+      }, 2000)
+    }catch(error){
+      console.error('Logout Failed',error)
+      uiActions.showNotification({
+          status: 'error',
+          title: 'Logout failed!',
+          message: 'Something wrong, we will fix it soon.',
+        })
     }
   }
 }

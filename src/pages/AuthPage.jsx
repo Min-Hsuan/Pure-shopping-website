@@ -1,7 +1,7 @@
 import AuthForm from '../components/Auth/AuthForm.jsx'
 
 const AuthPage = (props) => {
-  return <AuthForm />
+  return <AuthForm mode={props.mode} />
 }
 
 export default AuthPage

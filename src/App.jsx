@@ -61,23 +61,23 @@ function App() {
   //get firebase data when user is login
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(fetchCartData(idToken))
+      dispatch(fetchCartData())
       setTimeout(() => {
         dispatch(
           uiActions.resetNotification()
         )
       }, 2000)
     }
-  }, [dispatch, isLoggedIn, idToken])
+  }, [dispatch, isLoggedIn])
   return (
     <Layout>
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {!isLoggedIn && (
-            <Route path="/login" element={<AuthPage mode="login" />}/>
+            <Route path="/signup" element={<AuthPage mode="signup" />}/>
           )}
           {!isLoggedIn && (
-            <Route path="/signup" element={<AuthPage mode="signup" />}/>
+            <Route path="/login" element={<AuthPage mode="login" />}/>
           )}
           <Route path="/reset-password" element={<ResetPage />}/>
           <Route path="/" element={<HomePage

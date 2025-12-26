@@ -1,40 +1,22 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import  Logo  from '../../assets/logo.svg'
-import { authActions } from '../../store/auth-slice.js'
-import { cartActions } from '../../store/cart-slice.js'
 import { uiActions } from '../../store/ui-slice.js'
 import Notification from '../UI/Notification.jsx'
 import classes from './MainNavigation.module.css'
+import { logout} from '../../store/auth-https.js'
 
 const MainNavigation = (props) => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const isLoggedIn = useSelector((state) => state.auth.idToken)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const cartQuantity = useSelector((state) => state.cart.totalQuantity)
   const successMessage = useSelector((state) => state.ui.notification.message)
   const notifyStatus = useSelector((state) => state.ui.notification.status)
 
   const logoutHandler = () => {
-    dispatch(authActions.logout())
-    dispatch(cartActions.clearCart())
-    localStorage.removeItem('userIdToken')
-    localStorage.removeItem('userExpiration')
-    setTimeout(() => {
-      dispatch(
-        uiActions.showNotification({
-          status: 'success',
-          title: '',
-          message: 'Log out successfully.',
-        })
-      )
-    }, 300)
-    setTimeout(() => {
-      dispatch(uiActions.resetNotification())
-    }, 2000)
-    navigate('/')
+    dispatch(logout())
   }
 
   const cartOpenHandler = () => {

@@ -1,6 +1,6 @@
 import { cartActions } from './cart-slice.js'
 import { uiActions } from './ui-slice.js'
-import { onValue, ref, set } from 'firebase/database'
+import { get, ref, set } from 'firebase/database'
 import {db , auth} from '../firebase.js'
 
 const FIREBASE_DOMIN = import.meta.env.VITE_FIREBASE_DATABASE_URL
@@ -20,7 +20,6 @@ export const sendCartData = (cart) => {
     const uid = auth.currentUser?.uid
     if(!uid) return
     try{
-      console.log('uid',auth.currentUser)
       await set(ref(db, `carts/${uid}`),{
         items: cart.items,
         totalAmount: cart.totalAmount,
@@ -45,7 +44,7 @@ export const sendCartData = (cart) => {
   }
 }
 
-export const fetchCartData = (userIdToken) => {
+export const fetchCartData = () => {
   return async (dispatch) => {
     dispatch(
       uiActions.showNotification({
@@ -56,24 +55,18 @@ export const fetchCartData = (userIdToken) => {
     )
     const uid = auth.currentUser?.uid
     if(!uid) return
-    const cartRef = ref(db,`carts/${uid}`)
-    onValue(cartRef, (snapshot)=>{
+    try{
+      const cartRef = ref(db,`carts/${uid}`)
+      const snapshot = await get(cartRef)
       const data = snapshot.val() || {}
       dispatch(
         cartActions.replaceCart({
-          items: data.items || [],
-          totalAmount: data.totalAmount || 0,
-          totalQuantity: data.totalQuantity || 0,
-        })
-      )
-      dispatch(
-      uiActions.showNotification({
-        status: 'success',
-        title: 'Getting data successfully',
-        message: 'Getting cart data successfully.',
-      })
-    )
-    },(error)=>{
+            items: data.items || [],
+            totalAmount: data.totalAmount || 0,
+            totalQuantity: data.totalQuantity || 0,
+          })
+        )
+    }catch(error){
       console.log(error)
       dispatch(
         uiActions.showNotification({
@@ -82,7 +75,6 @@ export const fetchCartData = (userIdToken) => {
           message: 'Getting data failed.',
         })
       )
-    })
-    
+    }
   }
 }
