@@ -7,56 +7,38 @@ import LoadingSpinner from '../UI/LoadingSpinner.jsx'
 import classes from './AuthForm.module.css'
 import GoogleLoginBtn from './GoogleLoginBtn.jsx'
 
-const AuthForm = () => {
+const AuthForm = (props) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const emailRef = useRef()
   const passwordRef = useRef()
-  const [isLogin, setIsLogin] = useState(true)
+  const [errorMsg, setErrorMsg] = useState(null)
+  const [mode, setMode] = useState(props.mode) // switch between singup & login
   const notifyStatus = useSelector((state) => state.ui.notification.status)
   const notifyMessage = useSelector((state) => state.ui.notification.message)
-
+  
   const submitHandler = (event) => {
     event.preventDefault()
-    const enteredEmail = emailRef.current.value
-    const enteredPassword = passwordRef.current.value
-    let url
-    if (isLogin) {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g'
-    } else {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g'
-    }
-    dispatch(
-      fetchAuthData(
-        {
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        },
-        url
-      )
-    )
+    const email = emailRef.current.value
+    const password = passwordRef.current.value
+    dispatch(fetchAuthData(email,password, mode))
     if (notifyStatus === 'success') {
       navigate('/')
     }
   }
 
   const switchAuthModeHandler = () => {
-    setIsLogin((prev) => !prev)
+    setMode((prev) => prev === 'login'? 'signup' : 'login')
     emailRef.current.value = ''
     passwordRef.current.value = ''
+    setErrorMsg(null)
+    navigate(mode === 'login'? '/signup' : '/login')
     dispatch(
-      uiActions.showNotification({
-        status: '',
-        title: '',
-        message: '',
-      })
+      uiActions.resetNotification()
     )
   }
   let submitText = 'Create Account'
-  if (isLogin) {
+  if (mode==='login') {
     submitText = 'LOGIN'
   }
   if (notifyStatus === 'pending') {
@@ -65,26 +47,18 @@ const AuthForm = () => {
 
   const emailChangeHandler = () => {
     dispatch(
-      uiActions.showNotification({
-        status: '',
-        title: '',
-        message: '',
-      })
+      uiActions.resetNotification()
     )
   }
   const passwordChangeHandler = () => {
     dispatch(
-      uiActions.showNotification({
-        status: '',
-        title: '',
-        message: '',
-      })
+      uiActions.resetNotification()
     )
   }
   return (
     <div className={classes['auth-bgc']}>
       <section className={classes.auth}>
-        <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+        <h1>{ mode==='login' ? 'Login' : 'Sign Up'}</h1>
         <form onSubmit={submitHandler}>
           <div className={classes.control}>
             <label htmlFor="email">Email</label>
@@ -115,7 +89,7 @@ const AuthForm = () => {
           <Link to="/reset-password">Forgot your password ? </Link>
           <button className={classes.creat} onClick={switchAuthModeHandler}>
             {' '}
-            {isLogin ? 'Create an account' : 'Login with existing account'}{' '}
+            {mode==='login' ? 'Create an account' : 'Login with existing account'}{' '}
           </button>
           <span>or</span>
          <GoogleLoginBtn />

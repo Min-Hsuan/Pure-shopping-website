@@ -78,7 +78,10 @@ function App() {
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {!isLoggedIn && (
-            <Route path="/login" element={<AuthPage />}/>
+            <Route path="/login" element={<AuthPage mode="login" />}/>
+          )}
+          {!isLoggedIn && (
+            <Route path="/signup" element={<AuthPage mode="signup" />}/>
           )}
           <Route path="/reset-password" element={<ResetPage />}/>
           <Route path="/" element={<HomePage

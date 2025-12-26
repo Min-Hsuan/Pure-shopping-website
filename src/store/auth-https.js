@@ -1,7 +1,26 @@
 import { authActions } from './auth-slice.js'
 import { uiActions } from './ui-slice.js'
-
-export const fetchAuthData = (authData, url) => {
+import { signInWithEmailAndPassword ,createUserWithEmailAndPassword} from 'firebase/auth'
+import { auth } from '../firebase.js'
+const AUTH_ERRORS = {
+     // Registration Errors
+    'auth/email-already-in-use': 'This email is already registered. Please log in instead.',
+    'auth/invalid-email': 'The email address is not valid.',
+    'auth/operation-not-allowed': 'Email/password accounts are not enabled. Please contact support.',
+    'auth/weak-password': 'The password is too weak. Please use at least 6 characters.',
+    // Login Errors
+    'auth/user-disabled': 'This user account has been disabled by an administrator.',
+    'auth/user-not-found': 'No account found with this email.',
+    'auth/wrong-password': 'Incorrect password. Please try again.',
+    
+    // New Unified Error (Firebase v10+)
+    'auth/invalid-credential': 'Invalid email or password. Please check your credentials.',
+    
+    // General Errors
+    'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
+    'auth/network-request-failed': 'Network error. Please check your internet connection.'
+  };
+export const fetchAuthData = (email, password, mode) => {
   return async (dispatch) => {
     dispatch(
       uiActions.showNotification({
@@ -11,26 +30,22 @@ export const fetchAuthData = (authData, url) => {
       })
     )
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(authData),
-        headers: { 'Content-Type': 'application/json' },
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        let errorMessage = 'Authentication failed!'
-        if (data && data.error && data.error.message) {
-          errorMessage = data.error.message
-        }
-        throw new Error(errorMessage)
+      let userCrediential
+      if(mode==='login'){
+        userCrediential = await signInWithEmailAndPassword( auth, email, password)
+          dispatch(uiActions.showNotification({
+            status: 'success',
+            message: 'Sign in successfully'
+          }))
+      }else{
+        userCrediential = await createUserWithEmailAndPassword(auth, email, password)
       }
-      dispatch(authActions.login(data.localId))
-      localStorage.setItem('userIdToken', data.localId)
+      dispatch(authActions.login(userCrediential.user.uid))
+      localStorage.setItem('userIdToken', userCrediential.user.uid)
       const expirationTime = new Date(
         new Date().getTime() + data.expiresIn * 1000
       )
       localStorage.setItem('userExpiration', expirationTime)
-
       dispatch(
         uiActions.showNotification({
           status: 'success',
@@ -43,7 +58,7 @@ export const fetchAuthData = (authData, url) => {
         uiActions.showNotification({
           status: 'error',
           title: 'Error',
-          message: error.message,
+          message: AUTH_ERRORS[error.code],
         })
       )
     }
