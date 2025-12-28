@@ -5,7 +5,7 @@ import HeadLine from './Headline.jsx';
 const ArticleSection = (props) => {
   const content = <ul >{props.articles.map((article) => (
     <li key={article.id} className={classes['article-item']} >
-      <img src={article.img.url} alt={article.img.alt} />
+      <img loading="lazy" src={article.img.url} alt={article.img.alt} />
       <HeadLine
         title={article.text.title}
         paragraph={article.text.paragraph}

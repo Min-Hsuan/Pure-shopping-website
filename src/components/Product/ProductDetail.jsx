@@ -6,6 +6,7 @@ import { uiActions } from '../../store/ui-slice.js'
 import LoadingSpinner from '../UI/LoadingSpinner.jsx'
 import Modal from '../UI/Modal.jsx'
 import classes from './ProductDetail.module.css'
+import { useCallback } from 'react'
 
 const ProductDetail = (props) => {
   const dispatch = useDispatch()
@@ -17,7 +18,7 @@ const ProductDetail = (props) => {
   if (status === 'pending') {
     buttonText = <LoadingSpinner />
   }
-  const addToCartHandler = () => {
+  const addToCartHandler = useCallback(() => {
     dispatch(
       cartActions.addItem({
         id,
@@ -30,7 +31,7 @@ const ProductDetail = (props) => {
     if (status === 'success') {
       dispatch(uiActions.toggleCartDetail())
     }
-  }
+  },[dispatch])
 
   const closeModalHandler = () => {
     onClose()
@@ -39,7 +40,7 @@ const ProductDetail = (props) => {
   return (
     <Modal className="fixed-center" onClose={onClose}>
       <div className={classes.detail}>
-        <img src={url} alt={name} />
+        <img loading="lazy" src={url} alt={name} />
         <div className={classes.content}>
           <div>
             <h3 className={classes.name}>{name}</h3>

@@ -22,7 +22,6 @@ function App() {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  const idToken = useSelector((state) => state.auth.idToken)
   const notification = useSelector((state) => state.ui.notification)
 
   //check if user was login once page reload
