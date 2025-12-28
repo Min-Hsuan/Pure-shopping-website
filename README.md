@@ -1,12 +1,12 @@
 
-# Pure Shopping Website
+## Pure Shopping Website
 
 一個功能完整的純前端電商練習專案，模擬真實線上購物流程。包含使用者註冊/登入（支援 Google 第三方登入）、商品瀏覽、購物車管理等核心功能。
 
 **Live Demo**: [https://pure-shopping-website.vercel.app/](https://pure-shopping-website.vercel.app/)
 ![](https://live.staticflickr.com/65535/51544520641_218e19f949_b.jpg)
 
-## 專案特色 (Key Features)
+### 專案特色 (Key Features)
 
 - 使用者認證系統
   - 註冊、登入、登出功能
@@ -21,7 +21,7 @@
   - 包含首頁、商品列表、購物車、登入/註冊等頁面
 - 響應式設計（Responsive Design）
 
-## 使用技術 (Technologies Used)
+### 使用技術 (Technologies Used)
 
 | 類別           | 技術                          | 說明                                                                 |
 |----------------|-------------------------------|----------------------------------------------------------------------|
@@ -34,7 +34,7 @@
 | 程式碼品質     | ESLint                        | 維持一致的程式碼風格與品質                                           |
 | 部署平台       | Vercel                        | 一鍵部署，提供穩定公開線上版本                                       |
 
-## 我在這個專案中展現的能力 (Demonstrated Skills)
+### 能力 (Demonstrated Skills)
 
 此專案為個人獨立開發，從需求規劃到上線部署全程一手包辦，充分展現以下前端工程師核心能力：
 
@@ -49,7 +49,7 @@
 
 具備獨立開發一個具備真實後端支援、功能完整的前端電商應用的能力，能快速上手中大型 React 專案。
 
-## 本地執行 (Local Development)
+### 本地執行 (Local Development)
 
 ```bash
 # 複製專案
