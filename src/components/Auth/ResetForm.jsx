@@ -12,15 +12,9 @@ const ResetForm = () => {
   const submitHandler = (event) => {
     event.preventDefault()
     const enteredEmail = emailRef.current.value
-    const url =
-      'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBlSwWv8WcQ4MFE-NwrWjJIVKqp-Vz412g'
     dispatch(
       fetchResetAuth(
-        {
-          requestType: 'PASSWORD_RESET',
-          email: enteredEmail,
-        },
-        url
+        enteredEmail
       )
     )
   }

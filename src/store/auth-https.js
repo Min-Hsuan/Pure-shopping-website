@@ -1,6 +1,6 @@
 import { authActions } from './auth-slice.js'
 import { uiActions } from './ui-slice.js'
-import { signInWithEmailAndPassword ,createUserWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'
+import { signInWithEmailAndPassword ,createUserWithEmailAndPassword, onAuthStateChanged, signOut, getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import { auth } from '../firebase.js'
 import { cartActions } from './cart-slice.js';
 
@@ -72,20 +72,9 @@ export const fetchResetAuth = (emailData, url) => {
         message: 'Connecting...',
       })
     )
+    const auth = getAuth()
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(emailData),
-        headers: { 'Content-Type': 'application/json' },
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        let errorMessage = 'Send reset password email failed'
-        if (data && data.error && data.error.message) {
-          errorMessage = data.error.message
-        }
-        throw new Error(errorMessage)
-      }
+      await sendPasswordResetEmail(auth,emailData)
       dispatch(
         uiActions.showNotification({
           status: 'success',
@@ -97,11 +86,22 @@ export const fetchResetAuth = (emailData, url) => {
         dispatch(uiActions.resetNotification())
       }, 2000)
     } catch (error) {
+      let message
+      switch(error.code){
+        case "auth/invalid-email":
+          message="Invalid Email address"
+          break;
+        case "auth/user-not-found":
+          message="This Email is not registered"
+          break;
+        default:
+          message = "Please try again later";
+      }
       dispatch(
         uiActions.showNotification({
           status: 'error',
           title: 'Error',
-          message: error.message,
+          message: message,
         })
       )
     }
